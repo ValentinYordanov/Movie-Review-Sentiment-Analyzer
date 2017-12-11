@@ -38,11 +38,22 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			String line;
 			while ((line = br.readLine()) != null) {
 
-				String[] currentWord = line.split(" ");
-				for (int i = 1; i < currentWord.length; i++) {
-					if (!stopWords.contains(currentWord[i]) && currentWord[i].matches("[a-zA-Z0-9]*")) {
-						listOfWords.add(new WordData(currentWord[i], 1, Double.parseDouble(currentWord[0])));
+				String currentWord = null;
+				int i = 1;
+				while (i < line.length()) {
+
+					if (Character.isLetterOrDigit(line.charAt(i))) {
+						currentWord += line.charAt(i);
 					}
+
+					else {
+						if (!stopWords.contains(currentWord) && currentWord.matches("[a-zA-Z0-9]*")) {
+							listOfWords.add(new WordData(currentWord, 1, Character.digit(line.charAt(0), 10)));
+							currentWord = null;
+						}
+					}
+
+					i++;
 				}
 
 			}
@@ -50,13 +61,13 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
-		for(int i = 0; i < listOfWords.size() - 1; i++) {
-			
+
+		for (int i = 0; i < listOfWords.size() - 1; i++) {
+
 			double currentSentimentScore = listOfWords.get(i).getSentimentScore();
 			int numberOftimes = 1;
-			for(int j = i + 1; j < listOfWords.size(); j ++) {
-				if(listOfWords.get(i).getWord().toLowerCase().equals(listOfWords.get(j).getWord().toLowerCase())) {
+			for (int j = i + 1; j < listOfWords.size(); j++) {
+				if (listOfWords.get(i).getWord().toLowerCase().equals(listOfWords.get(j).getWord().toLowerCase())) {
 					currentSentimentScore += listOfWords.get(j).getSentimentScore();
 					numberOftimes++;
 					listOfWords.remove(j);
@@ -64,16 +75,19 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 				}
 			}
 			currentSentimentScore /= numberOftimes;
-			
-			words.put(listOfWords.get(i).getWord(), new WordData(listOfWords.get(i).getWord(), numberOftimes, currentSentimentScore));
-			
+
+			words.put(listOfWords.get(i).getWord().toLowerCase(),
+					new WordData(listOfWords.get(i).getWord().toLowerCase(), numberOftimes, currentSentimentScore));
+
 		}
 	}
 
 	@Override
 	public double getReviewSentiment(String review) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		double sentimentScore = -1.0;
+
+		return sentimentScore;
 	}
 
 	@Override
@@ -114,7 +128,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	@Override
 	public boolean isStopWord(String word) {
-		if(stopWords.contains(word)) {
+		if (stopWords.contains(word)) {
 			return true;
 		}
 		return false;
