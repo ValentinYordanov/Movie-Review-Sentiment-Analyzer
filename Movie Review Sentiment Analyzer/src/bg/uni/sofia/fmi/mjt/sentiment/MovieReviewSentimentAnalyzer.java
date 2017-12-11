@@ -4,8 +4,8 @@ import java.util.Collection;
 
 public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
-	public MovieReviewSentimentAnalyzer(String reviewsFileName, String stopwordsFileName) {
-	}
+	//public MovieReviewSentimentAnalyzer(String reviewsFileName, String stopwordsFileName) {
+	//}
 	
 	@Override
 	public double getReviewSentiment(String review) {
