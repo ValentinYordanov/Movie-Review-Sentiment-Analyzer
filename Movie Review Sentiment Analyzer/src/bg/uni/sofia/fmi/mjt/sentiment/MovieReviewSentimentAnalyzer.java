@@ -40,8 +40,8 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 				String[] currentWord = line.split(" ");
 				for (int i = 1; i < currentWord.length; i++) {
-					if (!stopWords.contains(currentWord[i])) {
-						listOfWords.add(new WordData(currentWord[i], 1, Integer.parseInt(currentWord[0])));
+					if (!stopWords.contains(currentWord[i]) && currentWord[i].matches("[a-zA-Z0-9]*")) {
+						listOfWords.add(new WordData(currentWord[i], 1, Double.parseDouble(currentWord[0])));
 					}
 				}
 
@@ -56,7 +56,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			double currentSentimentScore = listOfWords.get(i).getSentimentScore();
 			int numberOftimes = 1;
 			for(int j = i + 1; j < listOfWords.size(); j ++) {
-				if(listOfWords.get(i).getWord().equals(listOfWords.get(j).getWord())) {
+				if(listOfWords.get(i).getWord().toLowerCase().equals(listOfWords.get(j).getWord().toLowerCase())) {
 					currentSentimentScore += listOfWords.get(j).getSentimentScore();
 					numberOftimes++;
 					listOfWords.remove(j);
@@ -66,7 +66,6 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			currentSentimentScore /= numberOftimes;
 			
 			words.put(listOfWords.get(i).getWord(), new WordData(listOfWords.get(i).getWord(), numberOftimes, currentSentimentScore));
-			
 			
 		}
 	}
@@ -115,7 +114,9 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	@Override
 	public boolean isStopWord(String word) {
-		// TODO Auto-generated method stub
+		if(stopWords.contains(word)) {
+			return true;
+		}
 		return false;
 	}
 
