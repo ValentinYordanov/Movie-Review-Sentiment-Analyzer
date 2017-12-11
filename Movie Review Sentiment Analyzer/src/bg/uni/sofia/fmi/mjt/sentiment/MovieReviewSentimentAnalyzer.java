@@ -50,7 +50,25 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
+		
+		for(int i = 0; i < listOfWords.size() - 1; i++) {
+			
+			double currentSentimentScore = listOfWords.get(i).getSentimentScore();
+			int numberOftimes = 1;
+			for(int j = i + 1; j < listOfWords.size(); j ++) {
+				if(listOfWords.get(i).getWord().equals(listOfWords.get(j).getWord())) {
+					currentSentimentScore += listOfWords.get(j).getSentimentScore();
+					numberOftimes++;
+					listOfWords.remove(j);
+					j--;
+				}
+			}
+			currentSentimentScore /= numberOftimes;
+			
+			words.put(listOfWords.get(i).getWord(), new WordData(listOfWords.get(i).getWord(), numberOftimes, currentSentimentScore));
+			
+			
+		}
 	}
 
 	@Override
