@@ -61,5 +61,4 @@ public class WordData {
 		return true;
 	}
 
-
 }
