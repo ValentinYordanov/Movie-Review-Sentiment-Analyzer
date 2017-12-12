@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
@@ -86,44 +87,93 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 	public double getReviewSentiment(String review) {
 
 		double sentimentScore = -1.0;
+		int numberOfWordsInTheReview = 0;
 
-		return sentimentScore;
+		int i = 0;
+		String currentWord = null;
+		while (i < review.length()) {
+
+			if (Character.isLetterOrDigit(review.charAt(i))) {
+				currentWord += review.charAt(i);
+			} else {
+				if (stopWords.contains(currentWord) && !words.containsKey(currentWord)) {
+					sentimentScore += 0;
+				} else {
+
+					sentimentScore += words.get(currentWord).getSentimentScore();
+					numberOfWordsInTheReview++;
+				}
+			}
+
+			i++;
+		}
+
+		if (numberOfWordsInTheReview != 0) {
+			return (double) sentimentScore / numberOfWordsInTheReview;
+		}
+		return (double) sentimentScore;
 	}
 
 	@Override
 	public String getReviewSentimentAsName(String review) {
-		// TODO Auto-generated method stub
-		return null;
+		double score = getReviewSentiment(review);
+
+		int scoreRounded = (int) Math.round(score);
+
+		if (scoreRounded == 0) {
+			return "negative";
+		}
+		if (scoreRounded == 1) {
+			return "somewhat negative";
+		}
+		if (scoreRounded == 2) {
+			return "neutral";
+		}
+		if (scoreRounded == 3) {
+			return "somewhat positive";
+		}
+		if (scoreRounded == 4) {
+			return "positive";
+		}
+		return "unknown";
 	}
 
 	@Override
 	public double getWordSentiment(String word) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		if (words.containsKey(word)) {
+			return words.get(word).getSentimentScore();
+		}
+		return -1.0;
 	}
 
 	@Override
 	public Collection<String> getMostFrequentWords(int n) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Collection<WordData> list = new ArrayList<>(words.values());
+		return list.stream().sorted((p1, p2) -> Integer.compare(p2.getTimesFound(), p1.getTimesFound())).limit(n)
+				.map(p1 -> p1.getWord()).collect(Collectors.toList());
 	}
 
 	@Override
 	public Collection<String> getMostPositiveWords(int n) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Collection<WordData> list = new ArrayList<>(words.values());
+		return list.stream().sorted((p1, p2) -> Double.compare(p2.getSentimentScore(), p1.getSentimentScore())).limit(n)
+				.map(p1 -> p1.getWord()).collect(Collectors.toList());
 	}
 
 	@Override
 	public Collection<String> getMostNegativeWords(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<WordData> list = new ArrayList<>(words.values());
+
+		return list.stream().sorted((p1, p2) -> Double.compare(p1.getSentimentScore(), p2.getSentimentScore())).limit(n)
+				.map(p1 -> p1.getWord()).collect(Collectors.toList());
 	}
 
 	@Override
 	public int getSentimentDictionarySize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return words.size();
 	}
 
 	@Override
