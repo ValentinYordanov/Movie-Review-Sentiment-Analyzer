@@ -40,26 +40,39 @@ public class WordData {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(sentimentScore);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + timesFound;
 		result = prime * result + ((word == null) ? 0 : word.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		WordData other = (WordData) obj;
-		if (word == null) {
-			if (other.word != null)
-				return false;
-		} else if (!word.equals(other.word))
+		if (Double.doubleToLongBits(sentimentScore) != Double.doubleToLongBits(other.sentimentScore)) {
 			return false;
+		}
+		if (timesFound != other.timesFound) {
+			return false;
+		}
+		if (word == null) {
+			if (other.word != null) {
+				return false;
+			}
+		} else if (!word.equals(other.word)) {
+			return false;
+		}
 		return true;
 	}
-
-
 }

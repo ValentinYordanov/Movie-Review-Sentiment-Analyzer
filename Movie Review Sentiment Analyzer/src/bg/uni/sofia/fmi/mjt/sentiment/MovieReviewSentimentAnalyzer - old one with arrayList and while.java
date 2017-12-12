@@ -22,6 +22,8 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		stopWords = new HashSet<String>();
 		words = new HashMap<String, WordData>();
 
+		List<WordData> listOfWords = new ArrayList<>();
+
 		try (BufferedReader br = new BufferedReader(new FileReader(stopwordsFileName))) {
 
 			String line;
@@ -38,18 +40,22 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			String line;
 			while ((line = br.readLine()) != null) {
 
-				line = line.replaceAll("[!,?'/*.=:;-]", " ");
-				String[] strings = line.split("\\s+");
+				String currentWord = "";
+				int i = 1;
+				while (i < line.length()) {
 
-				for (int i = 1; i < strings.length; i++) {
-
-					if (words.containsKey(strings[i])) {
-						words.put(strings[i], new WordData(strings[i], words.get(strings[i]).getTimesFound() + 1,
-								words.get(strings[i]).getSentimentScore() + Double.parseDouble(strings[0])));
+					if (Character.isLetterOrDigit(line.charAt(i))) {
+						currentWord += line.charAt(i);
 					}
 
-					words.put(strings[i], new WordData(strings[i], 1, Double.parseDouble(strings[0])));
+					else {
+						if (!stopWords.contains(currentWord) && currentWord.matches("[a-zA-Z0-9][a-zA-Z0-9]*")) {
+							listOfWords.add(new WordData(currentWord, 1, Character.digit(line.charAt(0), 10)));
+							currentWord = "";
+						}
+					}
 
+					i++;
 				}
 
 			}
@@ -58,22 +64,24 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			ex.printStackTrace();
 		}
 
-		/*
-		 * for (int i = 0; i < listOfWords.size() - 1; i++) {
-		 * 
-		 * double currentSentimentScore = listOfWords.get(i).getSentimentScore(); int
-		 * numberOftimes = 1; for (int j = i + 1; j < listOfWords.size(); j++) { if
-		 * (listOfWords.get(i).getWord().toLowerCase().equals(listOfWords.get(j).getWord
-		 * ().toLowerCase())) { currentSentimentScore +=
-		 * listOfWords.get(j).getSentimentScore(); numberOftimes++;
-		 * listOfWords.remove(j); j--; } } currentSentimentScore /= numberOftimes;
-		 * 
-		 * words.put(listOfWords.get(i).getWord().toLowerCase(), new
-		 * WordData(listOfWords.get(i).getWord().toLowerCase(), numberOftimes,
-		 * currentSentimentScore));
-		 * 
-		 * }
-		 */
+		for (int i = 0; i < listOfWords.size() - 1; i++) {
+
+			double currentSentimentScore = listOfWords.get(i).getSentimentScore();
+			int numberOftimes = 1;
+			for (int j = i + 1; j < listOfWords.size(); j++) {
+				if (listOfWords.get(i).getWord().toLowerCase().equals(listOfWords.get(j).getWord().toLowerCase())) {
+					currentSentimentScore += listOfWords.get(j).getSentimentScore();
+					numberOftimes++;
+					listOfWords.remove(j);
+					j--;
+				}
+			}
+			currentSentimentScore /= numberOftimes;
+
+			words.put(listOfWords.get(i).getWord().toLowerCase(),
+					new WordData(listOfWords.get(i).getWord().toLowerCase(), numberOftimes, currentSentimentScore));
+
+		}
 	}
 
 	@Override
@@ -82,19 +90,24 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		double sentimentScore = -1.0;
 		int numberOfWordsInTheReview = 0;
 
-		review = review.replaceAll("[!,?'/*.=:;-]", " ");
-		String[] strings = review.split("\\s+");
+		int i = 0;
+		String currentWord = null;
+		while (i < review.length()) {
 
-		for (int i = 0; i < strings.length; i++) {
-
-			if (stopWords.contains(strings[i]) || !words.containsKey(strings[i])) {
-
+			if (Character.isLetterOrDigit(review.charAt(i))) {
+				currentWord += review.charAt(i);
 			} else {
+				if (stopWords.contains(currentWord) || !words.containsKey(currentWord)) {
+					sentimentScore += 0;
+				} else {
 
-				sentimentScore += words.get(strings[i]).getSentimentScore();
-				numberOfWordsInTheReview++;
-
+					sentimentScore += words.get(currentWord).getSentimentScore();
+					numberOfWordsInTheReview++;
+				}
+				currentWord = null;
 			}
+
+			i++;
 		}
 
 		if (numberOfWordsInTheReview != 0) {
@@ -174,16 +187,16 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 	}
 
 	public static void main(String[] args) {
-
-		MovieReviewSentimentAnalyzer test = new MovieReviewSentimentAnalyzer("movieReviews.txt", "stopwords.txt");
-		System.out.println("Done!");
-		// System.out.println("".matches("[a-zA-Z0-9][a-zA-Z0-9]*"));
-
-		/*
-		 * String test = "introspective independent "; test =
-		 * test.replaceAll("[!,?'/*.=:;-]", " "); String[] strings = test.split("\\s+");
-		 * System.out.println(Arrays.toString(strings));
-		 */
+		
+		//MovieReviewSentimentAnalyzer test = new MovieReviewSentimentAnalyzer("movieReviews.txt", "stopwords.txt");
+		//System.out.println("".matches("[a-zA-Z0-9][a-zA-Z0-9]*"));
+		
+		String test = "4 For those who pride themselves on sophisticated , discerning taste , this might not seem like the proper "
+				+ "	cup of tea , however it is almost guaranteed that even the stuffiest cinema goers will laugh their \\*\\*\\* off for an hour-and-a-half .";
+		test = test.replaceAll("[!,?'/*.=-]", " ");
+		String[] strings = test.split("\\s+");
+		System.out.println(Arrays.toString(strings));
+	
 	}
-
+	
 }
