@@ -39,7 +39,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			String line;
 			while ((line = br.readLine()) != null) {
 
-				String currentWord = null;
+				String currentWord = "";
 				int i = 1;
 				while (i < line.length()) {
 
@@ -48,9 +48,9 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 					}
 
 					else {
-						if (!stopWords.contains(currentWord) && currentWord.matches("[a-zA-Z0-9]*")) {
+						if (!stopWords.contains(currentWord) && currentWord.matches("[a-zA-Z0-9][a-zA-Z0-9]*")) {
 							listOfWords.add(new WordData(currentWord, 1, Character.digit(line.charAt(0), 10)));
-							currentWord = null;
+							currentWord = "";
 						}
 					}
 
@@ -184,4 +184,10 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		return false;
 	}
 
+	public static void main(String[] args) {
+		
+		//MovieReviewSentimentAnalyzer test = new MovieReviewSentimentAnalyzer("movieReviews.txt", "stopwords.txt");
+		System.out.println("".matches("[a-zA-Z0-9][a-zA-Z0-9]*"));
+	}
+	
 }
