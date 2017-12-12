@@ -140,7 +140,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 	public Collection<String> getMostFrequentWords(int n) {
 
 		Collection<WordData> list = new ArrayList<>(words.values());
-		return list.stream().sorted((p1, p2) -> Integer.compare(p2.getTimesFound(), p1.getTimesFound())).limit(n)
+		return list.stream().sorted((p1, p2) -> Double.compare(p2.getTimesFound(), p1.getTimesFound())).limit(n)
 				.map(p1 -> p1.getWord()).collect(Collectors.toList());
 	}
 
@@ -172,18 +172,4 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		}
 		return false;
 	}
-
-	public static void main(String[] args) {
-
-		MovieReviewSentimentAnalyzer test = new MovieReviewSentimentAnalyzer("movieReviews.txt", "stopwords.txt");
-		System.out.println("Done!");
-		// System.out.println("".matches("[a-zA-Z0-9][a-zA-Z0-9]*"));
-
-		/*
-		 * String test = "introspective independent "; test =
-		 * test.replaceAll("[!,?'/*.=:;-]", " "); String[] strings = test.split("\\s+");
-		 * System.out.println(Arrays.toString(strings));
-		 */
-	}
-
 }

@@ -46,18 +46,23 @@ public class WordData {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		WordData other = (WordData) obj;
 		if (word == null) {
-			if (other.word != null)
+			if (other.word != null) {
 				return false;
-		} else if (!word.equals(other.word))
+			}
+		} else if (!word.equals(other.word)) {
 			return false;
+		}
 		return true;
 	}
 
