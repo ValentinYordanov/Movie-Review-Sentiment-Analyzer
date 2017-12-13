@@ -1,0 +1,4 @@
+4 introspective movie.person
+3 movie person
+0 movie person
+2 person

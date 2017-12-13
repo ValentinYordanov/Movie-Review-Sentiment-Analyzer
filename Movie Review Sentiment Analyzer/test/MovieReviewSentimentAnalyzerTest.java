@@ -136,7 +136,7 @@ public class MovieReviewSentimentAnalyzerTest {
 
 	}
 
-	@Test
+	/*@Test
 	public void WordDataEqualsAndHashCode() {
 		WordData x = new WordData("Foo Bar", 1, 2.5); // equals and hashCode check name field value
 		WordData y = new WordData("Foo Bar", 1, 2.5);
@@ -186,5 +186,5 @@ public class MovieReviewSentimentAnalyzerTest {
 		WordData y = new WordData(null, 1, 2.5);
 		assertFalse("Different data equals fails", y.equals(x));
 
-	}
+	}*/
 }

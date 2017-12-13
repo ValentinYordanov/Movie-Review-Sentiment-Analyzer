@@ -5,11 +5,14 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
@@ -55,12 +58,12 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 					}
 
 					if (words.containsKey(strings[i])) {
-						words.put(strings[i], new WordData(strings[i], words.get(strings[i]).getTimesFound() + 1,
+						words.put(strings[i], new WordData(words.get(strings[i]).getTimesFound() + 1,
 								words.get(strings[i]).getCurrentSentimentScore() + Double.parseDouble(strings[0])));
 						continue;
 					}
 
-					words.put(strings[i], new WordData(strings[i], 1, Double.parseDouble(strings[0])));
+					words.put(strings[i], new WordData(1, Double.parseDouble(strings[0])));
 
 				}
 
@@ -151,25 +154,51 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 	@Override
 	public Collection<String> getMostFrequentWords(int n) {
 
-		Collection<WordData> list = new ArrayList<>(words.values());
-		return list.stream().sorted((p1, p2) -> Double.compare(p2.getTimesFound(), p1.getTimesFound())).limit(n)
-				.map(p1 -> p1.getWord()).collect(Collectors.toList());
+		/*
+		 * Collection<WordData> list = new ArrayList<>(words.values()); return
+		 * list.stream().sorted((p1, p2) -> Double.compare(p2.getTimesFound(),
+		 * p1.getTimesFound())).limit(n) .map(p1 ->
+		 * p1.getWord()).collect(Collectors.toList());
+		 */
+		return words.entrySet().stream()
+				.sorted((e1, e2) -> Integer.compare(e2.getValue().getTimesFound(), e1.getValue().getTimesFound()))
+				.limit(n).map(Map.Entry::getKey).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public Collection<String> getMostPositiveWords(int n) {
 
-		Collection<WordData> list = new ArrayList<>(words.values());
-		return list.stream().sorted((p1, p2) -> Double.compare(p2.getSentimentScore(), p1.getSentimentScore())).limit(n)
-				.map(p1 -> p1.getWord()).collect(Collectors.toList());
+		/*
+		 * Collection<WordData> list = new ArrayList<>(words.values()); return
+		 * list.stream().sorted((p1, p2) -> Double.compare(p2.getSentimentScore(),
+		 * p1.getSentimentScore())).limit(n) .map(p1 ->
+		 * p1.getWord()).collect(Collectors.toList());
+		 */
+
+		return words.entrySet().stream()
+				.sorted((e1, e2) -> Double.compare(e2.getValue().getSentimentScore(),
+						e1.getValue().getSentimentScore()))
+				.limit(n).map(Map.Entry::getKey).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public Collection<String> getMostNegativeWords(int n) {
-		Collection<WordData> list = new ArrayList<>(words.values());
 
-		return list.stream().sorted((p1, p2) -> Double.compare(p1.getSentimentScore(), p2.getSentimentScore())).limit(n)
-				.map(p1 -> p1.getWord()).collect(Collectors.toList());
+		/*
+		 * Collection<WordData> list = new ArrayList<>(words.values()); return
+		 * list.stream().sorted((p1, p2) -> Double.compare(p1.getSentimentScore(),
+		 * p2.getSentimentScore())).limit(n) .map(p1 ->
+		 * p1.getWord()).collect(Collectors.toList());
+		 * 
+		 */
+
+		return words.entrySet().stream()
+				.sorted((e1, e2) -> Double.compare(e1.getValue().getSentimentScore(),
+						e2.getValue().getSentimentScore()))
+				.limit(n).map(Map.Entry::getKey).collect(Collectors.toList());
+
 	}
 
 	@Override
@@ -185,4 +214,5 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		}
 		return false;
 	}
+
 }
