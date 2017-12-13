@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
-	private Set<String> stopWords;
-	private Map<String, WordData> words;
+	public Set<String> stopWords;
+	public Map<String, WordData> words;
 
 	public MovieReviewSentimentAnalyzer(String reviewsFileName, String stopwordsFileName) {
 
@@ -26,6 +26,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 			String line;
 			while ((line = br.readLine()) != null) {
+				line.toLowerCase();
 				stopWords.add(line);
 			}
 
@@ -38,14 +39,25 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 			String line;
 			while ((line = br.readLine()) != null) {
 
-				line = line.replaceAll("[!,?'/*.=:;-]", " ");
-				String[] strings = line.split("\\s+");
+				line = line.toLowerCase();
+
+				// line = line.replaceAll("[!,?'/*.=:;-]", " ");
+
+				// String[] strings = line.split("\\s+");
+				String[] strings = line.split("[^a-zA-Z0-9]");
 
 				for (int i = 1; i < strings.length; i++) {
 
+					strings[i].replaceAll(" ", "");
+
+					if (stopWords.contains(strings[i]) || !strings[i].matches("[a-zA-Z0-9][a-zA-Z0-9]*")) {
+						continue;
+					}
+
 					if (words.containsKey(strings[i])) {
 						words.put(strings[i], new WordData(strings[i], words.get(strings[i]).getTimesFound() + 1,
-								words.get(strings[i]).getSentimentScore() + Double.parseDouble(strings[0])));
+								words.get(strings[i]).getCurrentSentimentScore() + Double.parseDouble(strings[0])));
+						continue;
 					}
 
 					words.put(strings[i], new WordData(strings[i], 1, Double.parseDouble(strings[0])));
@@ -79,11 +91,11 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 	@Override
 	public double getReviewSentiment(String review) {
 
-		double sentimentScore = -1.0;
+		double sentimentScore = 0;
 		int numberOfWordsInTheReview = 0;
-
-		review = review.replaceAll("[!,?'/*.=:;-]", " ");
-		String[] strings = review.split("\\s+");
+		review = review.toLowerCase();
+		// review = review.replaceAll("[!,?'/*.=:;-]", " ");
+		String[] strings = review.split("[^a-zA-Z0-9]");
 
 		for (int i = 0; i < strings.length; i++) {
 
@@ -98,9 +110,9 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		}
 
 		if (numberOfWordsInTheReview != 0) {
-			return (double) sentimentScore / numberOfWordsInTheReview;
+			return sentimentScore / numberOfWordsInTheReview;
 		}
-		return (double) sentimentScore;
+		return -1.0;
 	}
 
 	@Override
@@ -167,6 +179,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	@Override
 	public boolean isStopWord(String word) {
+		word = word.toLowerCase();
 		if (stopWords.contains(word)) {
 			return true;
 		}
