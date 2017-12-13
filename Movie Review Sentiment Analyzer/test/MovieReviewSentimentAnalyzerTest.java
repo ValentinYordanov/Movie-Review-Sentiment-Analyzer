@@ -6,6 +6,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import bg.uni.sofia.fmi.mjt.sentiment.MovieReviewSentimentAnalyzer;
+import bg.uni.sofia.fmi.mjt.sentiment.WordData;
 
 public class MovieReviewSentimentAnalyzerTest {
 
@@ -120,18 +121,70 @@ public class MovieReviewSentimentAnalyzerTest {
 		Set<String> set = new HashSet<>(test2.getMostFrequentWords(1));
 		assertTrue("Most frequent words doesnt work", set.contains("car"));
 	}
-	
+
 	@Test
 	public void getWordSentiment() {
-		
+
 		assertEquals("Word Sentiment doesnt work!", 3.5, test2.getWordSentiment("movie"), 1.1);
-		
+
 	}
-	
+
 	@Test
 	public void getWordSentimentUnknowsWord() {
-		
+
 		assertEquals("Word Sentiment doesnt work!", -1, test2.getWordSentiment("any"), 1.1);
-		
+
+	}
+
+	@Test
+	public void WordDataEqualsAndHashCode() {
+		WordData x = new WordData("Foo Bar", 1, 2.5); // equals and hashCode check name field value
+		WordData y = new WordData("Foo Bar", 1, 2.5);
+		assertTrue(x.equals(y));
+		assertTrue(y.equals(x));
+		assertTrue(x.hashCode() == y.hashCode());
+	}
+
+	@Test
+	public void WordDataEqualsNull() {
+
+		WordData x = new WordData("Foo Bar", 1, 2.5);
+		assertFalse("Null equals fails", x.equals(null));
+
+	}
+
+	@Test
+	public void WordDataEqualsSame() {
+
+		WordData x = new WordData("Foo Bar", 1, 2.5);
+		assertTrue("Same obj equals fails", x.equals(x));
+
+	}
+
+	@Test
+	public void WordDataEqualsDifClass() {
+
+		WordData x = new WordData("Foo Bar", 1, 2.5);
+		String y = "asd";
+		assertFalse("Different obj equals fails", x.equals(y));
+
+	}
+
+	@Test
+	public void WordDataDifData() {
+
+		WordData x = new WordData("Foo Bar", 1, 2.5);
+		WordData y = new WordData("Foo Bar2", 1, 2.5);
+		assertFalse("Different data equals fails", x.equals(y));
+
+	}
+
+	@Test
+	public void WordDataDifData2() {
+
+		WordData x = new WordData("Foo Bar", 1, 2.5);
+		WordData y = new WordData(null, 1, 2.5);
+		assertFalse("Different data equals fails", y.equals(x));
+
 	}
 }
