@@ -6,185 +6,167 @@ import java.util.Set;
 import org.junit.Test;
 
 import bg.uni.sofia.fmi.mjt.sentiment.MovieReviewSentimentAnalyzer;
-import bg.uni.sofia.fmi.mjt.sentiment.WordData;
 
 public class MovieReviewSentimentAnalyzerTest {
 
-	MovieReviewSentimentAnalyzer test = new MovieReviewSentimentAnalyzer("movieReviews3.txt", "stopwords.txt");
-	MovieReviewSentimentAnalyzer test2 = new MovieReviewSentimentAnalyzer("movieReviews4.txt", "stopwords.txt");
+	MovieReviewSentimentAnalyzer dictionarySizeAndCollectionTesting = new MovieReviewSentimentAnalyzer(
+			"movieReviews4.txt", "stopwords.txt");
+	MovieReviewSentimentAnalyzer reviewSentimentTester = new MovieReviewSentimentAnalyzer("reviewSentimentTests.txt",
+			"stopwords.txt");
 
 	@Test
 	public void IsAStopWordtest() {
 
-		assertTrue("Should be a stopword!", test.isStopWord("a"));
+		assertTrue("Should be a stopword!", dictionarySizeAndCollectionTesting.isStopWord("a"));
 
 	}
 
 	@Test
 	public void IsNotAStopWordtest() {
 
-		assertFalse("Should NOT be a stopword!", test.isStopWord("aa"));
+		assertFalse("Should NOT be a stopword!", dictionarySizeAndCollectionTesting.isStopWord("aa"));
 
 	}
 
 	@Test
 	public void IsReviewSentimentRight() {
 
-		assertEquals("Sentiment score is not right!", 4, test.getReviewSentiment("introspective independent "), 1.01);
+		assertEquals("Sentiment score is not right!", 3.30556,
+				reviewSentimentTester.getReviewSentiment("good summer hobby"), 0.0001); // good - 3.5; summer - 3.75;
+		// hobby - 2.666666667
 
 	}
 
 	@Test
 	public void IsReviewSentimentRight2() {
 
-		assertEquals("Sentiment score is not right!", 3.5, test.getReviewSentiment("introspective fans "), 1.01);
+		assertEquals("Sentiment score is not right!", 3.5,
+				reviewSentimentTester.getReviewSentiment("any/MacAbre\\of'filmmaker"), 0.0001); // macabre - 3 filmmaker
+																								// - 4
 
 	}
 
 	@Test
 	public void IsReviewSentimentRight3() {
 
-		assertEquals("Sentiment score is not right!", 3.67, test.getReviewSentiment("introspective fans independent"),
-				1.01);
+		assertEquals("Sentiment score is not right!", 2.3334,
+				reviewSentimentTester.getReviewSentiment("Very SwinGing''RussiaN/Absorbing!!"), 0.0001); // swinging - 1
+																											// Russian -
+																											// 4
+																											// Absorbing
+																											// - 2
 
 	}
 
 	@Test
 	public void IsReviewSentimentAsNameRight() {
 
-		assertEquals("Sentiment score as name is not right!", "positive",
-				test.getReviewSentimentAsName(("introspective independent")));
+		assertEquals("Sentiment score as name is not right! - positive", "positive",
+				reviewSentimentTester.getReviewSentimentAsName("any/MacAbre\\of'filmmaker"));
 
 	}
 
 	@Test
 	public void IsReviewSentimentAsNameRight2() {
 
-		assertEquals("Sentiment score as name is not right!", "neutral", test.getReviewSentimentAsName("fans"));
+		assertEquals("Sentiment score as name is not right! - neutral", "neutral",
+				reviewSentimentTester.getReviewSentimentAsName("Very SwinGing''RussiaN/Absorbing!!"));
 
 	}
 
 	@Test
 	public void IsReviewSentimentAsNameRight3() {
 
-		assertEquals("Sentiment score as name is not right!", "unknown", test.getReviewSentimentAsName("any"));
+		assertEquals("Sentiment score as name is not right! - unknown", "unknown",
+				reviewSentimentTester.getReviewSentimentAsName("any"));
 
 	}
 
 	@Test
 	public void IsReviewSentimentAsNameRight4() {
 
-		assertEquals("Sentiment score as name is not right!", "somewhat negative",
-				test.getReviewSentimentAsName("inept"));
+		assertEquals("Sentiment score as name is not right! - somewhat negative", "somewhat negative",
+				reviewSentimentTester.getReviewSentimentAsName("Shyamalan should stop"));
 
 	}
 
 	@Test
 	public void IsReviewSentimentAsNameRight5() {
 
-		assertEquals("Sentiment score as name is not right!", "somewhat positive",
-				test.getReviewSentimentAsName("positively"));
+		assertEquals("Sentiment score as name is not right! - somewhat positive", "somewhat positive",
+				reviewSentimentTester.getReviewSentimentAsName("good summer hobby"));
 
 	}
 
 	@Test
 	public void IsReviewSentimentAsNameRight6() {
 
-		assertEquals("Sentiment score as name is not right!", "negative", test.getReviewSentimentAsName("movie"));
+		assertEquals("Sentiment score as name is not right! - negative", "negative",
+				reviewSentimentTester.getReviewSentimentAsName("sneaky feel"));
 
 	}
 
 	@Test
 	public void isDictionarySizeRight() {
 
-		assertEquals("Dictionary size not right!", 24, test2.getSentimentDictionarySize());
+		assertEquals("Dictionary size not right!", 24, dictionarySizeAndCollectionTesting.getSentimentDictionarySize());
 
 	}
 
 	@Test
 	public void getMostPositiveNWords() {
 
-		Set<String> set = new HashSet<>(test2.getMostPositiveWords(4));
+		Set<String> set = new HashSet<>(dictionarySizeAndCollectionTesting.getMostPositiveWords(4));
 		assertTrue("Most positive words doesnt work", set.contains("movie"));
 	}
 
 	@Test
 	public void getMostNegativeNWords() {
 
-		Set<String> set = new HashSet<>(test2.getMostNegativeWords(6));
+		Set<String> set = new HashSet<>(dictionarySizeAndCollectionTesting.getMostNegativeWords(5));
 		assertTrue("Most negative words doesnt work", set.contains("person"));
+	}
+
+	@Test
+	public void getMostNegativeNWords2() {
+
+		Set<String> set = new HashSet<>(dictionarySizeAndCollectionTesting.getMostNegativeWords(4));
+		assertFalse("Most negative words doesnt work", set.contains("person"));
 	}
 
 	@Test
 	public void getMostFrequentNWords() {
 
-		Set<String> set = new HashSet<>(test2.getMostFrequentWords(1));
-		assertTrue("Most frequent words doesnt work", set.contains("car"));
+		Set<String> set = new HashSet<>(dictionarySizeAndCollectionTesting.getMostFrequentWords(3));
+		System.out.println(dictionarySizeAndCollectionTesting.getMostFrequentWords(2));
+		assertTrue("Most frequent words doesnt work", set.contains("person"));
+	}
+
+	@Test
+	public void getMostFrequentNWords2() {
+
+		Set<String> set = new HashSet<>(dictionarySizeAndCollectionTesting.getMostFrequentWords(1));
+		assertFalse("Most frequent words doesnt work", set.contains("person"));
 	}
 
 	@Test
 	public void getWordSentiment() {
 
-		assertEquals("Word Sentiment doesnt work!", 3.5, test2.getWordSentiment("movie"), 1.1);
+		assertEquals("Word Sentiment doesnt work!", 3.75, reviewSentimentTester.getWordSentiment("summer"), 0.0001);
+
+	}
+
+	@Test
+	public void getWordSentiment2() {
+
+		assertEquals("Word Sentiment doesnt work!", 2.6666, reviewSentimentTester.getWordSentiment("hobby"), 0.0001);
 
 	}
 
 	@Test
 	public void getWordSentimentUnknowsWord() {
 
-		assertEquals("Word Sentiment doesnt work!", -1, test2.getWordSentiment("any"), 1.1);
+		assertEquals("Word Sentiment doesnt work!", -1, reviewSentimentTester.getWordSentiment("any"), 0.0001);
 
 	}
-
-	/*@Test
-	public void WordDataEqualsAndHashCode() {
-		WordData x = new WordData("Foo Bar", 1, 2.5); // equals and hashCode check name field value
-		WordData y = new WordData("Foo Bar", 1, 2.5);
-		assertTrue(x.equals(y));
-		assertTrue(y.equals(x));
-		assertTrue(x.hashCode() == y.hashCode());
-	}
-
-	@Test
-	public void WordDataEqualsNull() {
-
-		WordData x = new WordData("Foo Bar", 1, 2.5);
-		assertFalse("Null equals fails", x.equals(null));
-
-	}
-
-	@Test
-	public void WordDataEqualsSame() {
-
-		WordData x = new WordData("Foo Bar", 1, 2.5);
-		assertTrue("Same obj equals fails", x.equals(x));
-
-	}
-
-	@Test
-	public void WordDataEqualsDifClass() {
-
-		WordData x = new WordData("Foo Bar", 1, 2.5);
-		String y = "asd";
-		assertFalse("Different obj equals fails", x.equals(y));
-
-	}
-
-	@Test
-	public void WordDataDifData() {
-
-		WordData x = new WordData("Foo Bar", 1, 2.5);
-		WordData y = new WordData("Foo Bar2", 1, 2.5);
-		assertFalse("Different data equals fails", x.equals(y));
-
-	}
-
-	@Test
-	public void WordDataDifData2() {
-
-		WordData x = new WordData("Foo Bar", 1, 2.5);
-		WordData y = new WordData(null, 1, 2.5);
-		assertFalse("Different data equals fails", y.equals(x));
-
-	}*/
 }

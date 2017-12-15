@@ -2,23 +2,17 @@ package bg.uni.sofia.fmi.mjt.sentiment;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
-	public Set<String> stopWords;
-	public Map<String, WordData> words;
+	private Set<String> stopWords;
+	private Map<String, WordData> words;
 
 	public MovieReviewSentimentAnalyzer(String reviewsFileName, String stopwordsFileName) {
 
@@ -49,9 +43,13 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 				// String[] strings = line.split("\\s+");
 				String[] strings = line.split("[^a-zA-Z0-9]");
 
+				for (int j = 1; j < strings.length; j++) {
+					strings[j] = strings[j].replaceAll(" ", "");
+				}
+
 				for (int i = 1; i < strings.length; i++) {
 
-					strings[i].replaceAll(" ", "");
+					strings[i] = strings[i].replaceAll(" ", "");
 
 					if (stopWords.contains(strings[i]) || !strings[i].matches("[a-zA-Z0-9][a-zA-Z0-9]*")) {
 						continue;
@@ -96,26 +94,37 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 		double sentimentScore = 0;
 		int numberOfWordsInTheReview = 0;
+		double UnknowsCase = -1.0;
 		review = review.toLowerCase();
 		// review = review.replaceAll("[!,?'/*.=:;-]", " ");
 		String[] strings = review.split("[^a-zA-Z0-9]");
 
+		/*
+		 * for (int i = 0; i < strings.length; i++) {
+		 * 
+		 * if (stopWords.contains(strings[i]) || !words.containsKey(strings[i])) {
+		 * 
+		 * } else {
+		 * 
+		 * sentimentScore += words.get(strings[i]).getSentimentScore();
+		 * numberOfWordsInTheReview++;
+		 * 
+		 * } }
+		 */
+
 		for (int i = 0; i < strings.length; i++) {
-
-			if (stopWords.contains(strings[i]) || !words.containsKey(strings[i])) {
-
-			} else {
-
-				sentimentScore += words.get(strings[i]).getSentimentScore();
-				numberOfWordsInTheReview++;
-
+			if (getWordSentiment(strings[i]) == -1) {
+				continue;
 			}
+
+			sentimentScore += getWordSentiment(strings[i]);
+			numberOfWordsInTheReview++;
 		}
 
 		if (numberOfWordsInTheReview != 0) {
 			return sentimentScore / numberOfWordsInTheReview;
 		}
-		return -1.0;
+		return UnknowsCase;
 	}
 
 	@Override
@@ -124,26 +133,33 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 		int scoreRounded = (int) Math.round(score);
 
-		if (scoreRounded == 0) {
+		switch (scoreRounded) {
+		case 0:
 			return "negative";
-		}
-		if (scoreRounded == 1) {
+		case 1:
 			return "somewhat negative";
-		}
-		if (scoreRounded == 2) {
+		case 2:
 			return "neutral";
-		}
-		if (scoreRounded == 3) {
+		case 3:
 			return "somewhat positive";
-		}
-		if (scoreRounded == 4) {
+		case 4:
 			return "positive";
+
 		}
+
+		/*
+		 * if (scoreRounded == 0) { return "negative"; } if (scoreRounded == 1) { return
+		 * "somewhat negative"; } if (scoreRounded == 2) { return "neutral"; } if
+		 * (scoreRounded == 3) { return "somewhat positive"; } if (scoreRounded == 4) {
+		 * return "positive"; }
+		 */
 		return "unknown";
 	}
 
 	@Override
 	public double getWordSentiment(String word) {
+
+		word = word.toLowerCase();
 
 		if (words.containsKey(word)) {
 			return words.get(word).getSentimentScore();

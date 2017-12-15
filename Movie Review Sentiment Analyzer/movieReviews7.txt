@@ -1,4 +1,8 @@
-4 introspective movie.person
-3 movie person
-0 movie person
+4 artwork/any
+4 artwork
+4 artwork..
 2 person
+4 person
+3 person
+1 person
+2 artwork
