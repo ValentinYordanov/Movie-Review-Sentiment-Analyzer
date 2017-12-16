@@ -38,14 +38,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 				line = line.toLowerCase();
 
-				// line = line.replaceAll("[!,?'/*.=:;-]", " ");
-
-				// String[] strings = line.split("\\s+");
 				String[] strings = line.split("[^a-zA-Z0-9]");
-
-				for (int j = 1; j < strings.length; j++) {
-					strings[j] = strings[j].replaceAll(" ", "");
-				}
 
 				for (int i = 1; i < strings.length; i++) {
 
@@ -70,23 +63,6 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
-		/*
-		 * for (int i = 0; i < listOfWords.size() - 1; i++) {
-		 * 
-		 * double currentSentimentScore = listOfWords.get(i).getSentimentScore(); int
-		 * numberOftimes = 1; for (int j = i + 1; j < listOfWords.size(); j++) { if
-		 * (listOfWords.get(i).getWord().toLowerCase().equals(listOfWords.get(j).getWord
-		 * ().toLowerCase())) { currentSentimentScore +=
-		 * listOfWords.get(j).getSentimentScore(); numberOftimes++;
-		 * listOfWords.remove(j); j--; } } currentSentimentScore /= numberOftimes;
-		 * 
-		 * words.put(listOfWords.get(i).getWord().toLowerCase(), new
-		 * WordData(listOfWords.get(i).getWord().toLowerCase(), numberOftimes,
-		 * currentSentimentScore));
-		 * 
-		 * }
-		 */
 	}
 
 	@Override
@@ -96,23 +72,10 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		int numberOfWordsInTheReview = 0;
 		double UnknowsCase = -1.0;
 		review = review.toLowerCase();
-		// review = review.replaceAll("[!,?'/*.=:;-]", " ");
 		String[] strings = review.split("[^a-zA-Z0-9]");
 
-		/*
-		 * for (int i = 0; i < strings.length; i++) {
-		 * 
-		 * if (stopWords.contains(strings[i]) || !words.containsKey(strings[i])) {
-		 * 
-		 * } else {
-		 * 
-		 * sentimentScore += words.get(strings[i]).getSentimentScore();
-		 * numberOfWordsInTheReview++;
-		 * 
-		 * } }
-		 */
-
 		for (int i = 0; i < strings.length; i++) {
+			strings[i] = strings[i].replaceAll(" ", "");
 			if (getWordSentiment(strings[i]) == -1) {
 				continue;
 			}
@@ -129,9 +92,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	@Override
 	public String getReviewSentimentAsName(String review) {
-		double score = getReviewSentiment(review);
-
-		int scoreRounded = (int) Math.round(score);
+		int scoreRounded = (int) Math.round(getReviewSentiment(review));
 
 		switch (scoreRounded) {
 		case 0:
@@ -147,35 +108,24 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 		}
 
-		/*
-		 * if (scoreRounded == 0) { return "negative"; } if (scoreRounded == 1) { return
-		 * "somewhat negative"; } if (scoreRounded == 2) { return "neutral"; } if
-		 * (scoreRounded == 3) { return "somewhat positive"; } if (scoreRounded == 4) {
-		 * return "positive"; }
-		 */
 		return "unknown";
 	}
 
 	@Override
 	public double getWordSentiment(String word) {
 
+		double unknownCase = -1.0;
 		word = word.toLowerCase();
 
 		if (words.containsKey(word)) {
 			return words.get(word).getSentimentScore();
 		}
-		return -1.0;
+		return unknownCase;
 	}
 
 	@Override
 	public Collection<String> getMostFrequentWords(int n) {
 
-		/*
-		 * Collection<WordData> list = new ArrayList<>(words.values()); return
-		 * list.stream().sorted((p1, p2) -> Double.compare(p2.getTimesFound(),
-		 * p1.getTimesFound())).limit(n) .map(p1 ->
-		 * p1.getWord()).collect(Collectors.toList());
-		 */
 		return words.entrySet().stream()
 				.sorted((e1, e2) -> Integer.compare(e2.getValue().getTimesFound(), e1.getValue().getTimesFound()))
 				.limit(n).map(Map.Entry::getKey).collect(Collectors.toList());
@@ -184,13 +134,6 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	@Override
 	public Collection<String> getMostPositiveWords(int n) {
-
-		/*
-		 * Collection<WordData> list = new ArrayList<>(words.values()); return
-		 * list.stream().sorted((p1, p2) -> Double.compare(p2.getSentimentScore(),
-		 * p1.getSentimentScore())).limit(n) .map(p1 ->
-		 * p1.getWord()).collect(Collectors.toList());
-		 */
 
 		return words.entrySet().stream()
 				.sorted((e1, e2) -> Double.compare(e2.getValue().getSentimentScore(),
@@ -201,14 +144,6 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	@Override
 	public Collection<String> getMostNegativeWords(int n) {
-
-		/*
-		 * Collection<WordData> list = new ArrayList<>(words.values()); return
-		 * list.stream().sorted((p1, p2) -> Double.compare(p1.getSentimentScore(),
-		 * p2.getSentimentScore())).limit(n) .map(p1 ->
-		 * p1.getWord()).collect(Collectors.toList());
-		 * 
-		 */
 
 		return words.entrySet().stream()
 				.sorted((e1, e2) -> Double.compare(e1.getValue().getSentimentScore(),
