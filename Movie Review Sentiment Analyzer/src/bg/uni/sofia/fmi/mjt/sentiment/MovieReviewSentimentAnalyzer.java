@@ -24,7 +24,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 	}
 
-	void readStopWordsFromFile(String stopWordsFileName, Set<String> stopWords) {
+	private void readStopWordsFromFile(String stopWordsFileName, Set<String> stopWords) {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(stopWordsFileName))) {
 
@@ -39,7 +39,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		}
 	}
 
-	void readWordsFromFile(String reviewsFileName, Map<String, WordData> wordsMap) {
+	private void readWordsFromFile(String reviewsFileName, Map<String, WordData> wordsMap) {
 		try (BufferedReader br = new BufferedReader(new FileReader(reviewsFileName))) {
 
 			String line;
