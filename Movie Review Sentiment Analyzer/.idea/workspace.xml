@@ -12,7 +12,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WordData.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WordData.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/WordData.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="525">
@@ -32,7 +32,7 @@
       <file leaf-file-name="SentimentAnalyzer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/SentimentAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
+            <state relative-caret-position="696">
               <caret line="29" column="11" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
               <folding />
             </state>
@@ -43,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/MovieReviewSentimentAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="612">
-              <caret line="140" column="0" lean-forward="true" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+              <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
               <folding>
                 <element signature="e#4316#4317#0" expanded="true" />
                 <element signature="e#4345#4346#0" expanded="true" />
@@ -52,12 +52,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovieReviewSentimentAnalyzerTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MovieReviewSentimentAnalyzerTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-              <folding />
+            <state relative-caret-position="192">
+              <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -72,9 +74,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/MovieReviewSentimentAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/WordData.java" />
+        <option value="$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java" />
       </list>
     </option>
   </component>
@@ -152,7 +154,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.MovieReviewSentimentAnalyzerTest">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -192,6 +194,26 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
+    </configuration>
+    <configuration name="MovieReviewSentimentAnalyzerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Movie Review Sentiment Analyzer" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MovieReviewSentimentAnalyzerTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -253,9 +275,14 @@
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Application.MovieReviewSentimentAnalyzer" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.MovieReviewSentimentAnalyzerTest" />
+    </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.MovieReviewSentimentAnalyzer" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.MovieReviewSentimentAnalyzerTest" />
+        <item index="1" class="java.lang.String" itemvalue="Application.MovieReviewSentimentAnalyzer" />
       </list>
     </recent_temporary>
   </component>
@@ -272,12 +299,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1520707273056</updated>
-      <workItem from="1520707292365" duration="2151000" />
+      <workItem from="1520707292365" duration="2405000" />
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 21m 18s.xml">
+      <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2151000" />
+    <option name="totallyTimeSpent" value="2405000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -361,26 +393,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/SentimentAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="29" column="11" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/MovieReviewSentimentAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
-          <caret line="140" column="0" lean-forward="true" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+          <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
           <folding>
             <element signature="e#4316#4317#0" expanded="true" />
             <element signature="e#4345#4346#0" expanded="true" />
@@ -399,6 +415,24 @@
             <element signature="e#388#389#0" expanded="true" />
             <element signature="e#426#427#0" expanded="true" />
             <element signature="e#467#468#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/mjt/sentiment/SentimentAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="29" column="11" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

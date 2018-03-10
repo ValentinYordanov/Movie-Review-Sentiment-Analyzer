@@ -1,11 +1,7 @@
-/*import static org.junit.Assert.*;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import bg.uni.sofia.fmi.mjt.sentiment.MovieReviewSentimentAnalyzer;
 import org.junit.Test;
 
-import bg.uni.sofia.fmi.mjt.sentiment.MovieReviewSentimentAnalyzer;
+import static org.junit.Assert.*;
 
 public class MovieReviewSentimentAnalyzerTest {
 
@@ -100,4 +96,3 @@ public class MovieReviewSentimentAnalyzerTest {
 	}
 
 }
-*/
