@@ -169,7 +169,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 	@Override
 	public boolean isStopWord(String word) {
 		word = word.toLowerCase();
-		
+
 		return stopWordsSet.contains(word);
 	}
 }

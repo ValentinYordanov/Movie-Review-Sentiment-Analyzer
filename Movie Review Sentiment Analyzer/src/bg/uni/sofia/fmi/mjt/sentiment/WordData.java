@@ -14,20 +14,12 @@ public class WordData {
 		return timesFound;
 	}
 
-	public void setTimesFound(int timesFound) {
-		this.timesFound = timesFound;
-	}
-
 	public double getCurrentSentimentScore() {
 		return this.sentimentScore;
 	}
 
 	public double getSentimentScore() {
-		return (double) sentimentScore / timesFound;
-	}
-
-	public void setSentimentScore(double sentimentScore) {
-		this.sentimentScore = sentimentScore;
+		return sentimentScore / timesFound;
 	}
 
 }
