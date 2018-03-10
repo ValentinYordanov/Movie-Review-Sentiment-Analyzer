@@ -1,14 +1,28 @@
 import bg.uni.sofia.fmi.mjt.sentiment.MovieReviewSentimentAnalyzer;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
 
 public class MovieReviewSentimentAnalyzerTest {
 
+	private static MovieReviewSentimentAnalyzer reviewSentimentTester;
+	private static MovieReviewSentimentAnalyzer dictionarySizeAndCollectionTesting;
+	private static MovieReviewSentimentAnalyzer bigFileTester;
+
+	@BeforeClass
+	public static void beforeClass() throws FileNotFoundException {
+
+		reviewSentimentTester = new MovieReviewSentimentAnalyzer("reviewSentimentTests.txt", "stopwords.txt");
+		dictionarySizeAndCollectionTesting = new MovieReviewSentimentAnalyzer(
+				"movieReviews4.txt", "stopwords.txt");
+		 bigFileTester = new MovieReviewSentimentAnalyzer("movieReviews.txt",
+				"stopwords.txt");
+	}
+
 	@Test
 	public void IsReviewSentimentRight() {
-		MovieReviewSentimentAnalyzer reviewSentimentTester = new MovieReviewSentimentAnalyzer(
-				"reviewSentimentTests.txt", "stopwords.txt");
 
 		assertEquals("Sentiment score is not right!", 3.30556,
 				reviewSentimentTester.getReviewSentiment("good summer hobby"), 0.0001);
@@ -41,8 +55,6 @@ public class MovieReviewSentimentAnalyzerTest {
 
 	@Test
 	public void getNWords() {
-		MovieReviewSentimentAnalyzer dictionarySizeAndCollectionTesting = new MovieReviewSentimentAnalyzer(
-				"movieReviews4.txt", "stopwords.txt");
 
 		assertEquals("Dictionary size not right!", 24, dictionarySizeAndCollectionTesting.getSentimentDictionarySize());
 
@@ -50,39 +62,36 @@ public class MovieReviewSentimentAnalyzerTest {
 
 		assertFalse("Should NOT be a stopword!", dictionarySizeAndCollectionTesting.isStopWord("movie"));
 
-		assertTrue("Most positive words doesnt work",
+		assertTrue("Most positive words doesn't work",
 				dictionarySizeAndCollectionTesting.getMostPositiveWords(4).contains("movie"));
 
-		assertTrue("Most negative words doesnt work",
+		assertTrue("Most negative words doesn't work",
 				dictionarySizeAndCollectionTesting.getMostNegativeWords(5).contains("person"));
 
-		assertFalse("Most negative words doesnt work",
+		assertFalse("Most negative words doesn't work",
 				dictionarySizeAndCollectionTesting.getMostNegativeWords(4).contains("person"));
 
-		assertTrue("Most frequent words doesnt work",
+		assertTrue("Most frequent words doesn't work",
 				dictionarySizeAndCollectionTesting.getMostFrequentWords(3).contains("person"));
 
-		assertFalse("Most frequent words doesnt work",
+		assertFalse("Most frequent words doesn't work",
 				dictionarySizeAndCollectionTesting.getMostFrequentWords(1).contains("person"));
 	}
 
 	@Test
 	public void getWordSentiment() {
-		MovieReviewSentimentAnalyzer reviewSentimentTester = new MovieReviewSentimentAnalyzer(
-				"reviewSentimentTests.txt", "stopwords.txt");
 
-		assertEquals("Word Sentiment doesnt work!", 3.75, reviewSentimentTester.getWordSentiment("summer"), 0.0001);
+		assertEquals("Word Sentiment doesn't work!", 3.75, reviewSentimentTester.getWordSentiment("summer"), 0.0001);
 
-		assertEquals("Word Sentiment doesnt work!", 2.6666, reviewSentimentTester.getWordSentiment("hobby"), 0.0001);
+		assertEquals("Word Sentiment doesn't work!", 2.6666, reviewSentimentTester.getWordSentiment("hobby"), 0.0001);
 
-		assertEquals("unknown word Sentiment doesnt work!", -1, reviewSentimentTester.getWordSentiment("any"), 0.0001);
+		assertEquals("unknown word Sentiment doesn't work!", -1, reviewSentimentTester.getWordSentiment("any"), 0.0001);
 
 	}
 
 	@Test
 	public void getWordSentimentFBTests() {
-		MovieReviewSentimentAnalyzer bigFileTester = new MovieReviewSentimentAnalyzer("movieReviews.txt",
-				"stopwords.txt");
+
 		assertEquals("Word sentiment doesn't work!", 1.75, bigFileTester.getWordSentiment("Dude"), 0.0001);
 
 		assertEquals("Word sentiment doesn't work!", 2.6, bigFileTester.getWordSentiment("international"), 0.0001);
@@ -92,7 +101,6 @@ public class MovieReviewSentimentAnalyzerTest {
 
 		assertEquals("Review sentiment doesn't work", 2.180814662891809,
 				bigFileTester.getReviewSentiment("The funniest comedy of the year, good work! Don't miss it!"), 0.0001);
-
 	}
 
 }
