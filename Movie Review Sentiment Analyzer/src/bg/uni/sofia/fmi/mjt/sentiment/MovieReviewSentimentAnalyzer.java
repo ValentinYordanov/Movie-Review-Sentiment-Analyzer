@@ -23,7 +23,7 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 			String line;
 			while ((line = br.readLine()) != null) {
-				line.toLowerCase();
+				line = line.toLowerCase();
 				stopWords.add(line);
 			}
 
@@ -38,23 +38,23 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 
 				line = line.toLowerCase();
 
-				String[] strings = line.split("[^a-zA-Z0-9]");
+				String[] wordsInEachLine = line.split("[^a-zA-Z0-9]");
 
-				for (int i = 1; i < strings.length; i++) {
+				for (int i = 1; i < wordsInEachLine.length; i++) {
 
-					strings[i] = strings[i].replaceAll(" ", "");
+					wordsInEachLine[i] = wordsInEachLine[i].replaceAll(" ", "");
 
-					if (stopWords.contains(strings[i]) || !strings[i].matches("[a-zA-Z0-9][a-zA-Z0-9]*")) {
+					if (stopWords.contains(wordsInEachLine[i]) || !wordsInEachLine[i].matches("[a-zA-Z0-9][a-zA-Z0-9]*")) {
 						continue;
 					}
 
-					if (words.containsKey(strings[i])) {
-						words.put(strings[i], new WordData(words.get(strings[i]).getTimesFound() + 1,
-								words.get(strings[i]).getCurrentSentimentScore() + Double.parseDouble(strings[0])));
+					if (words.containsKey(wordsInEachLine[i])) {
+						words.put(wordsInEachLine[i], new WordData(words.get(wordsInEachLine[i]).getTimesFound() + 1,
+								words.get(wordsInEachLine[i]).getCurrentSentimentScore() + Double.parseDouble(wordsInEachLine[0])));
 						continue;
 					}
 
-					words.put(strings[i], new WordData(1, Double.parseDouble(strings[0])));
+					words.put(wordsInEachLine[i], new WordData(1, Double.parseDouble(wordsInEachLine[0])));
 
 				}
 
@@ -165,5 +165,4 @@ public class MovieReviewSentimentAnalyzer implements SentimentAnalyzer {
 		}
 		return false;
 	}
-
 }
