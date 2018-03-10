@@ -55,8 +55,8 @@
       <file leaf-file-name="MovieReviewSentimentAnalyzerTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="105" column="1" lean-forward="true" selection-start-line="105" selection-start-column="1" selection-end-line="105" selection-end-column="1" />
+            <state relative-caret-position="456">
+              <caret line="19" column="81" lean-forward="false" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -304,7 +304,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1520707273056</updated>
-      <workItem from="1520707292365" duration="3253000" />
+      <workItem from="1520707292365" duration="3481000" />
     </task>
     <servers />
   </component>
@@ -318,9 +318,24 @@
     <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 35m 55s.xml">
       <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 37m 59s.xml">
+      <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 38m 30s.xml">
+      <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 38m 44s.xml">
+      <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 39m 21s.xml">
+      <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MovieReviewSentimentAnalyzerTest - 2018.03.10 at 21h 39m 50s.xml">
+      <configuration name="MovieReviewSentimentAnalyzerTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3253000" />
+    <option name="totallyTimeSpent" value="3481000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -440,8 +455,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/MovieReviewSentimentAnalyzerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="105" column="1" lean-forward="true" selection-start-line="105" selection-start-column="1" selection-end-line="105" selection-end-column="1" />
+        <state relative-caret-position="456">
+          <caret line="19" column="81" lean-forward="false" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

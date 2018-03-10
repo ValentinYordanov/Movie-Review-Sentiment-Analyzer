@@ -16,8 +16,8 @@ public class MovieReviewSentimentAnalyzerTest {
 
 		reviewSentimentTester = new MovieReviewSentimentAnalyzer("reviewSentimentTests.txt", "stopwords.txt");
 		dictionarySizeAndCollectionTesting = new MovieReviewSentimentAnalyzer(
-				"movieReviews4.txt", "stopwords.txt");
-		 bigFileTester = new MovieReviewSentimentAnalyzer("movieReviews.txt",
+				"movieReviews.txt", "stopwords.txt");
+		 bigFileTester = new MovieReviewSentimentAnalyzer("movieReviewsSecondTime.txt",
 				"stopwords.txt");
 	}
 
